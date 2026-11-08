@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>basemap.world for OpenFreeMap</title>
+  <meta name="description" content="Unofficial MapLibre adaptation of the BKG basemap.world style, rendering only OpenFreeMap vector tiles.">
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css">
+  <style>
+    :root {
+      --bg: #fffdee;
+      --panel: rgba(255, 255, 255, 0.94);
+      --text: #1f2328;
+      --muted: #59636e;
+      --border: #d0d7de;
+      --accent: #2f5fb3;
+      --code-bg: #f3f4f6;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #161a1f;
+        --panel: rgba(22, 26, 31, 0.94);
+        --text: #e6edf3;
+        --muted: #9198a1;
+        --border: #3d444d;
+        --accent: #7ba7f0;
+        --code-bg: #0d1117;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #161a1f;
+      --panel: rgba(22, 26, 31, 0.94);
+      --text: #e6edf3;
+      --muted: #9198a1;
+      --border: #3d444d;
+      --accent: #7ba7f0;
+      --code-bg: #0d1117;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    #map { position: absolute; inset: 0; }
+    .panel {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      width: min(380px, calc(100vw - 32px));
+      max-height: calc(100% - 60px);
+      overflow: auto;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+    }
+    h1 { font-size: 16px; margin: 0 0 4px; }
+    p { margin: 6px 0; }
+    .muted { color: var(--muted); font-size: 13px; }
+    a { color: var(--accent); }
+    .switch { display: flex; gap: 0; margin: 10px 0 6px; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+    .switch button {
+      flex: 1;
+      border: 0;
+      padding: 6px 8px;
+      background: transparent;
+      color: var(--text);
+      font: inherit;
+      cursor: pointer;
+    }
+    .switch button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+    details { margin-top: 8px; }
+    summary { cursor: pointer; font-weight: 600; }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px;
+      overflow-x: auto;
+      font-size: 12px;
+    }
+    .status { font-variant-numeric: tabular-nums; }
+    ul.links { padding-left: 18px; margin: 6px 0; }
+  </style>
+</head>
+<body>
+  <div id="map" role="region" aria-label="Map preview"></div>
+
+  <aside class="panel">
+    <h1>basemap.world for OpenFreeMap</h1>
+    <p class="muted">
+      Unofficial adaptation of the
+      <a href="https://basemap.de/produkte-und-dienste/web-vektor-world/" target="_blank" rel="noopener noreferrer">basemap.world Web Vektor</a>
+      cartography (BKG) that renders only
+      <a href="https://openfreemap.org" target="_blank" rel="noopener noreferrer">OpenFreeMap</a>
+      vector tiles. Not an official BKG or basemap.de product.
+    </p>
+
+    <div class="switch" role="group" aria-label="Style to display">
+      <button type="button" data-style="local" aria-pressed="true">This style</button>
+      <button type="button" data-style="upstream" aria-pressed="false">Upstream BKG (compare)</button>
+    </div>
+    <p class="muted status" id="status">z – · –</p>
+
+    <ul class="links">
+      <li><a href="style.json">style.json</a> (stable entry point)</li>
+      <li><a href="attribution.html">Attribution &amp; licences</a></li>
+      <li><a href="https://github.com/Graphmasters/basemap-world-openfreemap">Source on GitHub</a></li>
+    </ul>
+
+    <details>
+      <summary>Use it in MapLibre GL JS</summary>
+      <pre><code>const styleBase = 'https://graphmasters.github.io/basemap-world-openfreemap';
+const map = new maplibregl.Map({
+  container: 'map',
+  style: `${styleBase}/style.json`,
+  attributionControl: {
+    compact: false,
+    customAttribution:
+      `&lt;a href="${styleBase}/attribution.html" target="_blank" rel="noopener noreferrer"&gt;` +
+      'Map style: basemap.world / BKG (CC BY 4.0), adapted by Graphmasters&lt;/a&gt;'
+  }
+});</code></pre>
+      <p class="muted">The style's source attribution already carries the BKG notice; the custom
+        attribution adds a link to the full credits page.</p>
+    </details>
+    <details>
+      <summary>Jump to</summary>
+      <ul class="links" id="places"></ul>
+    </details>
+  </aside>
+
+  <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
+  <script>
+    const UPSTREAM = 'https://sgx.geodatenzentrum.de/gdz_basemapworld_vektor/styles/bm_web_wld_col.json';
+    const LOCAL = new URL('style.json', location.href).href;
+    const PLACES = [
+      ['Europe', [10, 51], 4],
+      ['Hannover', [9.735, 52.374], 12],
+      ['Hannover, Messeschnellweg', [9.80, 52.33], 14],
+      ['Athens', [23.727, 37.984], 12],
+      ['Athens, Syntagma', [23.735, 37.975], 15],
+      ['Zugspitze (Alps)', [10.985, 47.421], 12],
+      ['New York', [-73.99, 40.73], 12],
+    ];
+
+    const params = new URLSearchParams(location.hash.slice(1));
+    let current = params.get('style') === 'upstream' ? 'upstream' : 'local';
+
+    const map = new maplibregl.Map({
+      container: 'map',
+      style: current === 'upstream' ? UPSTREAM : LOCAL,
+      hash: 'map',
+      center: [10, 51],
+      zoom: 5,
+      // The style's source attribution already carries the BKG notice and links to
+      // attribution.html, so the preview needs no customAttribution.
+      attributionControl: { compact: false }
+    });
+    window.map = map; // for debugging in the console
+    map.addControl(new maplibregl.NavigationControl(), 'top-right');
+    map.addControl(new maplibregl.ScaleControl(), 'bottom-right');
+
+    const status = document.getElementById('status');
+    const updateStatus = () => {
+      const c = map.getCenter();
+      status.textContent = `z ${map.getZoom().toFixed(2)} · ${c.lat.toFixed(4)}, ${c.lng.toFixed(4)}`;
+    };
+    map.on('move', updateStatus);
+    map.on('load', updateStatus);
+
+    // Report images the sprite lacks, so gaps in the adaptation show up in the console.
+    map.on('styleimagemissing', (e) => console.warn('missing sprite image:', e.id));
+
+    const buttons = document.querySelectorAll('.switch button');
+    const setPressed = () => buttons.forEach((b) =>
+      b.setAttribute('aria-pressed', String(b.dataset.style === current)));
+    setPressed();
+    buttons.forEach((b) => b.addEventListener('click', () => {
+      if (b.dataset.style === current) return;
+      current = b.dataset.style;
+      setPressed();
+      map.setStyle(current === 'upstream' ? UPSTREAM : LOCAL);
+    }));
+
+    const placeList = document.getElementById('places');
+    for (const [name, center, zoom] of PLACES) {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = '#';
+      a.textContent = name;
+      a.addEventListener('click', (ev) => { ev.preventDefault(); map.jumpTo({ center, zoom }); });
+      li.append(a);
+      placeList.append(li);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Map Style Attribution</title>
+  <meta name="description" content="Credits, licences and changes for the basemap-world-openfreemap MapLibre style.">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #1f2328;
+      --muted: #59636e;
+      --border: #d0d7de;
+      --accent: #2f5fb3;
+      --note-bg: #fff8e1;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0d1117;
+        --text: #e6edf3;
+        --muted: #9198a1;
+        --border: #3d444d;
+        --accent: #7ba7f0;
+        --note-bg: #2b2410;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #0d1117;
+      --text: #e6edf3;
+      --muted: #9198a1;
+      --border: #3d444d;
+      --accent: #7ba7f0;
+      --note-bg: #2b2410;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    main { max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; }
+    h1 { font-size: 26px; margin: 0 0 8px; }
+    h2 { font-size: 18px; margin: 32px 0 8px; padding-top: 16px; border-top: 1px solid var(--border); }
+    a { color: var(--accent); }
+    .muted { color: var(--muted); }
+    .note { background: var(--note-bg); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; }
+    code { font-size: 0.92em; overflow-wrap: anywhere; }
+    blockquote { margin: 8px 0; padding: 6px 14px; border-left: 3px solid var(--border); }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Attribution &amp; licences</h1>
+  <p class="muted">For the MapLibre style published at
+    <a href="style.json"><code>https://graphmasters.github.io/basemap-world-openfreemap/style.json</code></a>.
+    <a href="./">Back to the map preview</a>.</p>
+
+  <p class="note"><strong>Unofficial adaptation.</strong> This style is maintained by Graphmasters.
+    It is not an official product of the Bundesamt für Kartographie und Geodäsie (BKG) or
+    basemap.de, and BKG does not endorse it.</p>
+
+  <h2>1. Map design: basemap.world / BKG, CC BY 4.0, adapted by Graphmasters</h2>
+  <p>The cartographic design (colours, line widths, zoom rules, label rules) is taken from the
+    <a href="https://basemap.de/produkte-und-dienste/web-vektor-world/">basemap.world Web Vektor</a>
+    colour style (<code>bm_web_wld_col</code>, style version 5.0.2) published by the BKG.</p>
+  <blockquote>© GeoBasis-DE / <a href="https://www.bkg.bund.de">BKG</a> (2026)
+    <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, modified by Graphmasters
+    (see <a href="#changes">changes</a>)</blockquote>
+  <p>The adapted style file is distributed under the same licence,
+    <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International</a>.</p>
+
+  <h2>2. Map data: © OpenStreetMap contributors, ODbL</h2>
+  <p>All features drawn on the map come from <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>,
+    © OpenStreetMap contributors, available under the
+    <a href="https://opendatacommons.org/licenses/odbl/">Open Database License (ODbL)</a>.</p>
+
+  <h2>3. Vector-tile schema: OpenMapTiles</h2>
+  <p>The tiles follow the <a href="https://openmaptiles.org/schema/">OpenMapTiles</a> schema,
+    © OpenMapTiles.</p>
+
+  <h2>4. Tile delivery: OpenFreeMap</h2>
+  <p>Vector tiles are served by <a href="https://openfreemap.org">OpenFreeMap</a>
+    (<code>https://tiles.openfreemap.org/planet</code>). Its terms of use and availability apply.</p>
+
+  <h2>5. Sprites and fonts: hosted by BKG</h2>
+  <p>Map symbols (sprite) and font glyphs are loaded directly from BKG servers at request time.
+    This repository does not copy or redistribute them:</p>
+  <ul>
+    <li>Sprite: <code>https://sgx.geodatenzentrum.de/gdz_basemapde_vektor/sprites/v2/bm_web_col_sprite</code></li>
+    <li>Glyphs: <code>https://sgx.geodatenzentrum.de/gdz_basemapde_vektor/fonts/v2/{fontstack}/{range}.pbf</code>
+      (Noto Sans and Roboto; both font families are under open font licences)</li>
+  </ul>
+  <p>Using them is subject to BKG's terms of use. If those endpoints change or become unavailable,
+    symbols and labels will stop rendering.</p>
+
+  <h2 id="changes">6. Changes to the original style</h2>
+  <ul>
+    <li>Removed all layers that use the Germany-only BKG source (<code>smarttiles_de</code>, BKG's own
+      schema). In Germany the map therefore shows the world rendering rather than BKG's detailed
+      national cartography.</li>
+    <li>Replaced the world source (<code>smarttiles_wld</code>) with OpenFreeMap vector tiles. Layer
+      paint, layout, zoom ranges and order are unchanged.</li>
+    <li>Removed filter clauses on the BKG-only attribute <code>klasse</code> (building classes).</li>
+    <li>Replaced the style name, id, metadata and source attribution.</li>
+  </ul>
+  <p><strong>No BKG vector-tile data or BKG geodata are used.</strong> BKG is the author of the map
+    design, not the provider of the road network or other map content shown.</p>
+
+  <h2>Licences in the repository</h2>
+  <ul>
+    <li>Style files (<code>docs/style.json</code>, <code>upstream/</code>): CC BY 4.0</li>
+    <li>Build and validation scripts, preview pages: Apache-2.0</li>
+  </ul>
+  <p class="muted">Source and change history:
+    <a href="https://github.com/Graphmasters/basemap-world-openfreemap">github.com/Graphmasters/basemap-world-openfreemap</a>.</p>
+</main>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "basemap-world-openfreemap",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Unofficial MapLibre adaptation of the BKG basemap.world style for OpenFreeMap vector tiles",
+  "license": "Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-style.mjs",
+    "refresh": "node scripts/build-style.mjs --refresh",
+    "validate": "node scripts/validate-style.mjs",
+    "validate:offline": "node scripts/validate-style.mjs --offline"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@maplibre/maplibre-gl-style-spec": "26.5.1"
+  }
+}
