@@ -14,11 +14,18 @@ The cartographic design comes from the
 `bm_web_wld_col` (style version 5.0.2, snapshot date in `upstream/SNAPSHOT`), source
 `https://sgx.geodatenzentrum.de/gdz_basemapworld_vektor/styles/bm_web_wld_col.json`.
 
-Source notice and notice of changes, as required by the
-[basemap.de terms of use](https://sgx.geodatenzentrum.de/public/gdz/lizenz/deu/nutzungsbedingungen_basemapde.pdf) §3:
+Source notice and notice of changes, after the
+[basemap.de terms of use](https://sgx.geodatenzentrum.de/public/gdz/lizenz/deu/nutzungsbedingungen_basemapde.pdf) §3,
+as shown in the map attribution:
 
-> © GeoBasis-DE / [BKG](https://www.bkg.bund.de) (2026)
-> [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), modified by Graphmasters
+> Style: © [BKG](https://www.bkg.bund.de) [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), modified
+
+"modified" links this page; the changes are listed in section 6. §3 prescribes
+"© GeoBasis-DE / BKG (year of the last data download) CC BY 4.0" for BKG *data*. This style uses no
+BKG geodata (section 6), so "GeoBasis-DE" and the year are left out; BKG and CC BY 4.0 stay linked
+as §3 requires. The PDF lists the basemap.de products and does not name basemap.world, but the
+[basemap.world Web Vektor page](https://basemap.de/produkte-und-dienste/web-vektor-world/) links it
+under "Lizenz- und Nutzungsbedingungen", so it applies to this style.
 
 ## 2. Map data: © OpenStreetMap contributors, ODbL
 
@@ -53,7 +60,4 @@ not copied into this repository. The fonts are Noto Sans and Roboto, both under 
 
 ## Open points
 
-- The basemap.de terms-of-use PDF lists the basemap.de products (Web Raster, Web Vektor, P10). It
-  does not name basemap.world explicitly. Confirm with BKG that CC BY 4.0 also covers the
-  basemap.world style before announcing the style publicly.
 - Confirm that BKG allows third-party pages to use the sprite and glyph endpoints directly.
