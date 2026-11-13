@@ -21,19 +21,17 @@ const styleBase = 'https://graphmasters.github.io/basemap-world-openfreemap';
 const map = new maplibregl.Map({
   container: 'map',
   style: `${styleBase}/style.json`,
-  attributionControl: {
-    compact: false,
-    customAttribution:
-      `<a href="${styleBase}/attribution.html" target="_blank" rel="noopener noreferrer">` +
-      'Map style: basemap.world / BKG (CC BY 4.0), adapted by Graphmasters</a>'
-  }
 });
 ```
 
-The source attribution in `style.json` already shows the OpenFreeMap, OpenMapTiles and OSM credits
-plus the BKG notice. MapLibre will not link to the full credits page on its own, so add the
-`customAttribution` above. Keep the attribution visible and do not collapse it in a way that hides
-the BKG notice.
+The source attribution in `style.json` carries every credit the map needs:
+
+> OpenFreeMap | © OpenMapTiles | © OpenStreetMap contributors | Style: © BKG CC BY 4.0, modified
+
+"modified" links the [full credits and the list of changes](https://graphmasters.github.io/basemap-world-openfreemap/attribution.html),
+so no `customAttribution` is needed. Do not add your own BKG or style credit on top; MapLibre would
+show it twice. Keep the attribution reachable, for example with MapLibre's compact attribution
+button.
 
 ### Feature picking
 
@@ -77,6 +75,6 @@ validator. `deploy.yml` publishes `docs/` to GitHub Pages on every push to `main
 ## Licences
 
 - Style files (`docs/style.json`, `upstream/`): [CC BY 4.0](LICENSES/CC-BY-4.0.txt), after
-  © GeoBasis-DE / BKG. See [ATTRIBUTION.md](ATTRIBUTION.md).
+  © BKG. See [ATTRIBUTION.md](ATTRIBUTION.md).
 - Scripts and preview pages: [Apache-2.0](LICENSE).
 - Map data: © OpenStreetMap contributors, ODbL. Tile schema: © OpenMapTiles. Tiles: OpenFreeMap.

@@ -32,11 +32,14 @@ const outFile = path.join(root, 'docs', 'style.json');
 const ATTRIBUTION = [
   '<a href="https://openfreemap.org" target="_blank">OpenFreeMap</a>',
   '<a href="https://www.openmaptiles.org/" target="_blank">&copy; OpenMapTiles</a>',
-  'Data from <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
-  // BKG Quellenvermerk + Veränderungshinweis (nutzungsbedingungen_basemapde.pdf, §3).
-  'Map style: &copy; GeoBasis-DE / <a href="https://www.bkg.bund.de" target="_blank">BKG</a> (2026) ' +
+  '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+  // BKG source notice and notice of changes (nutzungsbedingungen_basemapde.pdf, §3), for the style
+  // only: BKG and CC BY 4.0 linked as §3 requires. "GeoBasis-DE" and the year of the last data
+  // download are left out because no BKG geodata is used (see ATTRIBUTION.md). "modified" links
+  // the full credits and the list of changes.
+  'Style: &copy; <a href="https://www.bkg.bund.de" target="_blank">BKG</a> ' +
     '<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>, ' +
-    `<a href="${PAGES_BASE}/attribution.html" target="_blank">modified by Graphmasters</a>`,
+    `<a href="${PAGES_BASE}/attribution.html" target="_blank">modified</a>`,
 ].join(' | ');
 
 /** Returns true if a legacy or expression filter clause only tests a BKG-only property. */
